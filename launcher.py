@@ -43,19 +43,29 @@ def launch_game(event=None):
 
 # button frame _new_ 
 button_frame = tk.Frame(root)  # Define button_frame before using it
-button_frame.pack(fill=tk.X, padx=5, pady=5)
+button_frame.grid(row=0, column=0, columnspan=2, sticky="ew", padx=5, pady=5)
+
+button_frame.grid_columnconfigure(0, weight=1)
+button_frame.grid_columnconfigure(1, weight=0)
 
 
 # add button
-add_button = tk.Button(root, text="Add to Library", command=add_game)  
-add_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
+add_button = tk.Button(root, text="Add to Library", command=add_game, width=15)  
+add_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")  #aligned-left
 # remove button
-remove_button = tk.Button(button_frame, text="X", command=remove_game)
-remove_button.pack(side=tk.RIGHT)
+remove_button = tk.Button(button_frame, text="❌", command=remove_game, width=3)
+remove_button.grid(row=0, column=1, padx=10, pady=10, sticky="e")  #aligned-right
 #library
 games_list = tk.Listbox(root)  
-games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # follow window size  
+# games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # follow window size
+games_list.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=5, pady=5)  #fill-space
 games_list.bind("<Double-Button-1>", launch_game)  # double click launch
+
+#library-fill-space 
+root.grid_rowconfigure(1, weight=1)
+root.grid_columnconfigure(0, weight=1)
+root.grid_columnconfigure(1, weight=1)
+
 
 # launch_button = tk.Button(root, text="Play", command=launch_game)  
 # launch_button.pack(fill=tk.X, padx=5, pady=5)  
