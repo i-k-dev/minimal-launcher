@@ -30,7 +30,10 @@ def launch_game(event=None):
     selected_game = games_list.get(tk.ACTIVE)  
     if selected_game:  
         game_path = game_paths.get(selected_game) #get full path
-        subprocess.Popen(selected_game)  
+        if game_path and os.path.exists(game_path): #check if exist
+            subprocess.Popen(game_path)
+    else:
+        print("Error! not found") #debug
 
 # UI  
 add_button = tk.Button(root, text="Add to Library", command=add_game)  
