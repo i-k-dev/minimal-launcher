@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog  
 import subprocess  
 import os
+import webbrowser # for about me
 
 
 # main window 
@@ -9,6 +10,9 @@ root = tk.Tk()
 root.title("launcher")
 root.geometry("300x500")  # window size  
 root.resizable(False, False)  # no resizing for control purpose
+root.attributes("-toolwindow", True) # hides maximize button
+
+
 
 game_paths = {} # path dictionary
 
@@ -44,9 +48,30 @@ def remove_game():
 def exit_program():
     root.quit()
     ## Function = About
-def open_about():
-    print("WIP 2025") #placeholder for reference
+# def open_about():
+#     print("WIP 2025") #placeholder for reference
 
+def open_about():
+    about_window = tk.Toplevel(root)
+
+    about_window.title("About")
+    about_window.geometry("250x180")
+
+
+    about_label = tk.Label(
+        about_window,
+        text="wip2025\nVersion 0.13\nfor future reference",
+        justify="center",
+        padx=10, pady=10
+    )
+    about_label.pack()
+
+    ## Function = Link
+    def open_github():
+        webbrowser.open("https://github.com/i-k-dev")  # hi
+    
+    github_button = tk.Button(about_window, text="GitHub", command=open_github, fg="blue", cursor="hand2")
+    github_button.pack(pady=5)
 
 
 menu_bar = tk.Menu(root)
@@ -55,10 +80,13 @@ menu_bar.add_cascade(label="File", menu=file_menu)  # Add "File" dropdown to men
     # Add menu options
 file_menu.add_command(label="Add Program", command=add_game)
 file_menu.add_command(label="About", command=open_about)
+
 file_menu.add_separator()  # Adds a separator before Exit
 file_menu.add_command(label="Exit", command=exit_program)
+
     # Attach menu bar to window
 root.config(menu=menu_bar)
+
 
 
 
