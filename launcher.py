@@ -22,13 +22,16 @@ def launch_game():
 
 # UI  
 add_button = tk.Button(root, text="Add to Library", command=add_game)  
-add_button.pack(fill=tk.X, padx=5, pady=5)  
+add_button.pack(fill=tk.X, padx=5, pady=5)  # add
+
+remove_button = tk.Button(root, text="Remove from Library", command=remove_game)  
+remove_button.pack(fill=tk.X, padx=5, pady=5) # remove 
 
 games_list = tk.Listbox(root)  
-games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # Makes it follow window size  
-games_list.bind("<Double-Button-1>", launch_game)  # Bind double-click event
+games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # follow window size  
+games_list.bind("<Double-Button-1>", launch_game)  # double click launch
 
-launch_button = tk.Button(root, text="Play", command=launch_game)  
-launch_button.pack(fill=tk.X, padx=5, pady=5)  
+# launch_button = tk.Button(root, text="Play", command=launch_game)  
+# launch_button.pack(fill=tk.X, padx=5, pady=5)  
 
 root.mainloop()
