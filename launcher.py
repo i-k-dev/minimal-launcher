@@ -1,7 +1,8 @@
 import tkinter as tk  
 from tkinter import filedialog  
 import subprocess  
-game_paths = {} # path dictionary
+import os
+
 
 # main window 
 root = tk.Tk()  
@@ -9,7 +10,7 @@ root.title("launcher")
 root.geometry("300x500")  # window size  
 root.resizable(False, False)  # no resizing for control purpose
 
-import os # import os file path
+game_paths = {} # path dictionary
 
 # add to library
 def add_game():  
@@ -20,14 +21,6 @@ def add_game():
         games_list.insert(tk.END, game_name) 
         game_paths[game_name] = file_path # actuall full path
 
-# remove from libraary 
-def remove_game():  
-    selected_index = games_list.curselection()  
-    if selected_index:  
-        game_name = games_list.get(selected_index)
-        games_list.delete(selected_index)  
-        game_paths.pop(game_name, None)  # Remove from stored paths
-
 # launch exe  
 def launch_game(event=None):  
     selected_game = games_list.get(tk.ACTIVE)  
@@ -36,7 +29,17 @@ def launch_game(event=None):
         if game_path and os.path.exists(game_path): #check if exist
             subprocess.Popen(game_path)
     else:
-        print("Error! Title not found") #debug
+        print("Error! Title not found.") #debug
+
+# remove from libraary 
+def remove_game():  
+    selected_index = games_list.curselection()  
+    if selected_index:  
+        game_name = games_list.get(selected_index)
+        games_list.delete(selected_index)  
+        game_paths.pop(game_name, None)  # Remove from stored paths
+
+
 
 
 # UI  
@@ -49,12 +52,13 @@ button_frame.grid_columnconfigure(0, weight=1)
 button_frame.grid_columnconfigure(1, weight=0)
 
 
-# add button
-add_button = tk.Button(root, text="Add to Library", command=add_game, width=15)  
-add_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")  #aligned-left
-# remove button
-remove_button = tk.Button(button_frame, text="❌", command=remove_game, width=3)
-remove_button.grid(row=0, column=1, padx=10, pady=10, sticky="e")  #aligned-right
+# # add button
+# add_button = tk.Button(root, text="Add to Library", command=add_game, width=15)  
+# add_button.grid(row=0, column=0, padx=10, pady=10, sticky="w")  #aligned-left
+# # remove button
+# remove_button = tk.Button(button_frame, text="❌", command=remove_game, width=3)
+# remove_button.grid(row=0, column=1, padx=10, pady=10, sticky="e")  #aligned-right
+
 #library
 games_list = tk.Listbox(root)  
 # games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # follow window size
