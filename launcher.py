@@ -39,6 +39,27 @@ def remove_game():
         games_list.delete(selected_index)  
         game_paths.pop(game_name, None)  # Remove from stored paths
 
+# menu bar
+    ## Function = Exit
+def exit_program():
+    root.quit()
+    ## Function = About
+def open_about():
+    print("WIP 2025") #placeholder for reference
+
+
+
+menu_bar = tk.Menu(root)
+file_menu = tk.Menu(menu_bar, tearoff=0)  # "File" menu
+menu_bar.add_cascade(label="File", menu=file_menu)  # Add "File" dropdown to menu bar
+    # Add menu options
+file_menu.add_command(label="Add Program", command=add_game)
+file_menu.add_command(label="About", command=open_about)
+file_menu.add_separator()  # Adds a separator before Exit
+file_menu.add_command(label="Exit", command=exit_program)
+    # Attach menu bar to window
+root.config(menu=menu_bar)
+
 
 
 
