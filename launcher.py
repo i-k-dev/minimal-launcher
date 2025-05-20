@@ -21,7 +21,7 @@ def remove_game():
         games_list.delete(selected_index)  
 
 # launch exe  
-def launch_game():  
+def launch_game(event=None):  
     selected_game = games_list.get(tk.ACTIVE)  
     if selected_game:  
         subprocess.Popen(selected_game)  
