@@ -1,6 +1,7 @@
 import tkinter as tk  
 from tkinter import filedialog  
 import subprocess  
+game_paths = {} # path dictionary
 
 # main window 
 root = tk.Tk()  
@@ -8,11 +9,15 @@ root.title("launcher")
 root.geometry("300x500")  # window size  
 root.resizable(False, False)  # no resizing for control purpose
 
+import os # import os file path
+
 # add to library
 def add_game():  
     file_path = filedialog.askopenfilename(title="Select Title", filetypes=[("Executable Files", "*.exe")])  
     if file_path:  
-        games_list.insert(tk.END, file_path) 
+        game_name = os.path.basename(file_path) # program.exe instead of full path
+        games_list.insert(tk.END, game_name) 
+        game_paths[game_name] = file_path # actuall full path
 
 # remove from libraary 
 def remove_game():  
@@ -24,6 +29,7 @@ def remove_game():
 def launch_game(event=None):  
     selected_game = games_list.get(tk.ACTIVE)  
     if selected_game:  
+        game_path = game_paths.get(selected_game) #get full path
         subprocess.Popen(selected_game)  
 
 # UI  
