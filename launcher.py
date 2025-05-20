@@ -12,7 +12,13 @@ root.resizable(False, False)  # no resizing for control purpose
 def add_game():  
     file_path = filedialog.askopenfilename(title="Select Title", filetypes=[("Executable Files", "*.exe")])  
     if file_path:  
-        games_list.insert(tk.END, file_path)  
+        games_list.insert(tk.END, file_path) 
+
+# remove from libraary 
+def remove_game():  
+    selected_index = games_list.curselection()  
+    if selected_index:  
+        games_list.delete(selected_index)  
 
 # launch exe  
 def launch_game():  
