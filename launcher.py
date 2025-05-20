@@ -16,6 +16,7 @@ def add_game():
     file_path = filedialog.askopenfilename(title="Select Title", filetypes=[("Executable Files", "*.exe")])  
     if file_path:  
         game_name = os.path.basename(file_path) # program.exe instead of full path
+        game_name = os.path.splitext(game_name)[0]  # remove .exe on display
         games_list.insert(tk.END, game_name) 
         game_paths[game_name] = file_path # actuall full path
 
@@ -23,7 +24,9 @@ def add_game():
 def remove_game():  
     selected_index = games_list.curselection()  
     if selected_index:  
+        game_name = games_list.get(selected_index)
         games_list.delete(selected_index)  
+        game_paths.pop(game_name, None)  # Remove from stored paths
 
 # launch exe  
 def launch_game(event=None):  
@@ -33,20 +36,29 @@ def launch_game(event=None):
         if game_path and os.path.exists(game_path): #check if exist
             subprocess.Popen(game_path)
     else:
-        print("Error! not found") #debug
+        print("Error! Title not found") #debug
+
 
 # UI  
+
+# button frame _new_ 
+button_frame = tk.Frame(root)  # Define button_frame before using it
+button_frame.pack(fill=tk.X, padx=5, pady=5)
+
+
+# add button
 add_button = tk.Button(root, text="Add to Library", command=add_game)  
-add_button.pack(fill=tk.X, padx=5, pady=5)  # add
-
-remove_button = tk.Button(root, text="Remove from Library", command=remove_game)  
-remove_button.pack(fill=tk.X, padx=5, pady=5) # remove 
-
+add_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
+# remove button
+remove_button = tk.Button(button_frame, text="X", command=remove_game)
+remove_button.pack(side=tk.RIGHT)
+#library
 games_list = tk.Listbox(root)  
 games_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)  # follow window size  
 games_list.bind("<Double-Button-1>", launch_game)  # double click launch
 
 # launch_button = tk.Button(root, text="Play", command=launch_game)  
 # launch_button.pack(fill=tk.X, padx=5, pady=5)  
+
 
 root.mainloop()
